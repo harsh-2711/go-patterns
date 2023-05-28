@@ -1,16 +1,17 @@
-package di
+package service
 
 import (
 	"context"
+	"go-patterns/di/repository"
 	"go-patterns/model"
 	"log"
 )
 
 type DIService struct {
-	repo *DIRepository
+	repo *repository.DIRepository
 }
 
-func NewDIService(repo *DIRepository) *DIService {
+func NewDIService(repo *repository.DIRepository) *DIService {
 	log.Println("Initialized DI Service")
 	return &DIService{repo: repo}
 }

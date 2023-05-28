@@ -1,7 +1,8 @@
-package di
+package repository
 
 import (
 	"context"
+	"go-patterns/di/storage"
 	"go-patterns/model"
 	"log"
 	"os"
@@ -11,16 +12,16 @@ import (
 )
 
 type DIRepository struct {
-	client *mongo.Client
+	mongo storage.Mongo
 }
 
-func NewDIRepository(client *mongo.Client) *DIRepository {
+func NewDIRepository(mongo storage.Mongo) *DIRepository {
 	log.Println("Initialized DI Repository")
-	return &DIRepository{client: client}
+	return &DIRepository{mongo}
 }
 
 func (r *DIRepository) getCollection() *mongo.Collection {
-	return r.client.Database(os.Getenv("TEST_DB")).Collection("users")
+	return r.mongo.Client.Database(os.Getenv("TEST_DB")).Collection("users")
 }
 
 func (r *DIRepository) FindByEmail(ctx context.Context, email string) (*model.UserType, error) {
